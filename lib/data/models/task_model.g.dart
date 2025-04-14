@@ -64,34 +64,34 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
           typeId == other.typeId;
 }
 
-class TaskPriorityAdapterAdapter extends TypeAdapter<TaskPriorityAdapter> {
+class TaskPriorityModelAdapter extends TypeAdapter<TaskPriorityModel> {
   @override
   final int typeId = 1;
 
   @override
-  TaskPriorityAdapter read(BinaryReader reader) {
+  TaskPriorityModel read(BinaryReader reader) {
     switch (reader.readByte()) {
       case 0:
-        return TaskPriorityAdapter.low;
+        return TaskPriorityModel.low;
       case 1:
-        return TaskPriorityAdapter.medium;
+        return TaskPriorityModel.medium;
       case 2:
-        return TaskPriorityAdapter.high;
+        return TaskPriorityModel.high;
       default:
-        return TaskPriorityAdapter.low;
+        return TaskPriorityModel.low;
     }
   }
 
   @override
-  void write(BinaryWriter writer, TaskPriorityAdapter obj) {
+  void write(BinaryWriter writer, TaskPriorityModel obj) {
     switch (obj) {
-      case TaskPriorityAdapter.low:
+      case TaskPriorityModel.low:
         writer.writeByte(0);
         break;
-      case TaskPriorityAdapter.medium:
+      case TaskPriorityModel.medium:
         writer.writeByte(1);
         break;
-      case TaskPriorityAdapter.high:
+      case TaskPriorityModel.high:
         writer.writeByte(2);
         break;
     }
@@ -103,7 +103,7 @@ class TaskPriorityAdapterAdapter extends TypeAdapter<TaskPriorityAdapter> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TaskPriorityAdapterAdapter &&
+      other is TaskPriorityModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

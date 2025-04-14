@@ -163,7 +163,7 @@ class TaskModel {
 
 // Hive adapter for TaskPriority enum
 @HiveType(typeId: HiveConstants.taskPriorityTypeId)
-enum TaskPriorityAdapter {
+enum TaskPriorityModel {
   @HiveField(0)
   low,
   @HiveField(1)
