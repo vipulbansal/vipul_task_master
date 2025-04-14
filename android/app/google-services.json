@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "406692980755",
+    "project_id": "vipultaskmaster",
+    "storage_bucket": "vipultaskmaster.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406692980755:android:a0d75bffc33b4a4e34b7e6",
+        "android_client_info": {
+          "package_name": "com.vipulsoftwares.vipul_task_master"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvvKZ1f6AwtHnZHvmJsnyohTUQdhG5l80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
