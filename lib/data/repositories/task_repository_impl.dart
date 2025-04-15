@@ -5,12 +5,15 @@ import 'package:vipul_task_master/domain/entities/task.dart';
 
 import '../../domain/repositories/task_repository.dart';
 import '../datasources/local/hive_service.dart';
+import '../datasources/remote/firestore_service.dart';
+import '../models/task_model.dart';
 
 class TaskRepositoryImpl implements TaskRepository {
   final HiveService _hiveService;
+  final FirestoreService _firestoreService;
   final Uuid _uuid = const Uuid();
 
-  TaskRepositoryImpl(this._hiveService);
+  TaskRepositoryImpl(this._hiveService,this._firestoreService);
 
   @override
   Future<Task> createTask(
@@ -18,9 +21,26 @@ class TaskRepositoryImpl implements TaskRepository {
       required String description,
       required DateTime dueDate,
       required TaskPriority priority,
-      required bool hasReminder}) {
-    // TODO: implement createTask
-    throw UnimplementedError();
+      required bool hasReminder}) async{
+    // Create a new task with a unique ID
+    final taskId = _uuid.v4();
+    final now = DateTime.now();
+
+    final taskModel = TaskModel(
+      id: taskId,
+      title: title,
+      description: description,
+      dueDate: dueDate,
+      priority: priority,
+      hasReminder: hasReminder,
+      isCompleted: false,
+      createdAt: now,
+      updatedAt: null,
+    );
+    // Save to both local and remote
+    await _hiveService.saveTask(taskModel);
+    await _firestoreService.saveTask(taskModel);
+    return taskModel.toEntity();
   }
 
   @override

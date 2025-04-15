@@ -11,13 +11,14 @@ class HiveService {
   List<TaskModel> getAllTasks() {
     return tasksBox.values.toList();
   }
-  
+
   /// Get a task by ID
   TaskModel? getTaskById(String id) {
-    return tasksBox.values.firstWhere(
-      (task) => task.id == id,
-      orElse: () => null as TaskModel,
-    );
+    try {
+      return tasksBox.values.firstWhere((task) => task.id == id);
+    } catch (e) {
+      return null; // Return null if not found
+    }
   }
   
   /// Save a task to Hive
