@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vipul_task_master/core/di/service_locator.dart';
 import 'package:vipul_task_master/core/router/app_router.dart';
 import 'package:vipul_task_master/core/themes/app_theme.dart';
+import 'package:vipul_task_master/presentation/blocs/task/tasks_bloc.dart';
 import 'package:vipul_task_master/presentation/blocs/themecubit/theme_cubit.dart';
 
 main() async {
@@ -30,6 +31,7 @@ class VipulTaskMaster extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_)=>sl<ThemeCubit>()),
+        BlocProvider(create: (_)=>sl<TaskBloc>()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
@@ -38,7 +40,7 @@ class VipulTaskMaster extends StatelessWidget {
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: state.themeMode,
-            routerConfig: AppRouter.goRouter,
+            routerConfig: AppRouter.router,
             debugShowCheckedModeBanner: false,
           );
         },
