@@ -5,6 +5,8 @@ class AppConstants {
 
   // Database collections
   static const String tasksCollection = 'tasks';
+  // Notification settings
+  static const int notificationReminderMinutes = 15;
 }
 
 
