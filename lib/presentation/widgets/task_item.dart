@@ -3,6 +3,7 @@ import 'package:vipul_task_master/presentation/widgets/priority_badge.dart';
 
 import '../../core/constants/app_constants.dart';
 import '../../core/utils/date_time_utils.dart';
+import '../../data/models/task_model.dart';
 import '../../domain/entities/task.dart';
 
 
@@ -27,13 +28,13 @@ class TaskItem extends StatelessWidget {
     Color cardColor = theme.cardColor;
     if (!task.isCompleted) {
       switch (task.priority) {
-        case TaskPriority.high:
+        case TaskPriorityModel.high:
           cardColor = isDarkMode ? Colors.red.shade900 : Colors.red.shade50;
           break;
-        case TaskPriority.medium:
+        case TaskPriorityModel.medium:
           cardColor = isDarkMode ? Colors.orange.shade900 : Colors.orange.shade50;
           break;
-        case TaskPriority.low:
+        case TaskPriorityModel.low:
           cardColor = isDarkMode ? Colors.green.shade900 : Colors.green.shade50;
           break;
       }

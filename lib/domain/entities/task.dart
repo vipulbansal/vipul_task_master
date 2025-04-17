@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../../data/models/task_model.dart';
 
 /// Task entity class - core domain object 
 class Task extends Equatable {
@@ -8,7 +9,7 @@ class Task extends Equatable {
   final String title;
   final String description;
   final DateTime dueDate;
-  final TaskPriority priority;
+  final TaskPriorityModel priority;
   final bool hasReminder;
   final bool isCompleted;
   final DateTime createdAt;
@@ -45,7 +46,7 @@ class Task extends Equatable {
     String? title,
     String? description,
     DateTime? dueDate,
-    TaskPriority? priority,
+    TaskPriorityModel? priority,
     bool? hasReminder,
     bool? isCompleted,
     DateTime? createdAt,

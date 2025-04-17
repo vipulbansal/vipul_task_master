@@ -20,7 +20,7 @@ class TaskRepositoryImpl implements TaskRepository {
       {required String title,
       required String description,
       required DateTime dueDate,
-      required TaskPriority priority,
+      required TaskPriorityModel priority,
       required bool hasReminder}) async{
     // Create a new task with a unique ID
     final taskId = _uuid.v4();

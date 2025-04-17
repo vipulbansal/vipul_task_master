@@ -21,7 +21,7 @@ class TaskModel {
   final DateTime dueDate;
 
   @HiveField(4)
-  final TaskPriority priority;
+  final TaskPriorityModel priority;
 
   @HiveField(5)
   final bool hasReminder;
@@ -110,27 +110,27 @@ class TaskModel {
   }
 
   // Private helper method to convert string to TaskPriority enum
-  static TaskPriority _priorityFromString(String priority) {
+  static TaskPriorityModel _priorityFromString(String priority) {
     switch (priority.toLowerCase()) {
       case 'low':
-        return TaskPriority.low;
+        return TaskPriorityModel.low;
       case 'medium':
-        return TaskPriority.medium;
+        return TaskPriorityModel.medium;
       case 'high':
-        return TaskPriority.high;
+        return TaskPriorityModel.high;
       default:
-        return TaskPriority.medium;
+        return TaskPriorityModel.medium;
     }
   }
 
   // Private helper method to convert TaskPriority enum to string
-  static String _priorityToString(TaskPriority priority) {
+  static String _priorityToString(TaskPriorityModel priority) {
     switch (priority) {
-      case TaskPriority.low:
+      case TaskPriorityModel.low:
         return 'low';
-      case TaskPriority.medium:
+      case TaskPriorityModel.medium:
         return 'medium';
-      case TaskPriority.high:
+      case TaskPriorityModel.high:
         return 'high';
     }
   }
@@ -141,7 +141,7 @@ class TaskModel {
     String? title,
     String? description,
     DateTime? dueDate,
-    TaskPriority? priority,
+    TaskPriorityModel? priority,
     bool? hasReminder,
     bool? isCompleted,
     DateTime? createdAt,

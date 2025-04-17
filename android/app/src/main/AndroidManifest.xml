@@ -14,9 +14,9 @@
     <!-- Alternative permission for Android 13+ that doesn't require user prompt but requires approval -->
     <!-- <uses-permission android:name="android.permission.USE_EXACT_ALARM" /> -->
     <application
-        android:label="vipul_task_master"
+        android:label="Task Master"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

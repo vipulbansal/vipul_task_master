@@ -1,4 +1,5 @@
 import '../../core/constants/app_constants.dart';
+import '../../data/models/task_model.dart';
 import '../entities/task.dart';
 
 abstract class TaskRepository {
@@ -13,7 +14,7 @@ abstract class TaskRepository {
     required String title,
     required String description,
     required DateTime dueDate,
-    required TaskPriority priority,
+    required TaskPriorityModel priority,
     required bool hasReminder,
   });
 

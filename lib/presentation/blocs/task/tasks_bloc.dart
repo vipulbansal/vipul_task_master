@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 
 import '../../../core/constants/app_constants.dart';
 import '../../../core/services/notification_service.dart';
+import '../../../data/models/task_model.dart';
 import '../../../domain/entities/task.dart';
 import '../../../domain/usecases/task_usecases.dart';
 

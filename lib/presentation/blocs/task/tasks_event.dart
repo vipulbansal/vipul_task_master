@@ -25,7 +25,7 @@ class CreateTaskEvent extends TaskEvent {
   final String title;
   final String description;
   final DateTime dueDate;
-  final TaskPriority priority;
+  final TaskPriorityModel priority;
   final bool hasReminder;
 
   const CreateTaskEvent({

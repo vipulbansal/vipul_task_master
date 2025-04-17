@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../../data/models/task_model.dart';
 
 class PriorityBadge extends StatelessWidget {
-  final TaskPriority priority;
+  final TaskPriorityModel priority;
   final bool isCompleted;
   final bool showLabel;
   final double height;
@@ -57,11 +58,11 @@ class PriorityBadge extends StatelessWidget {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     switch (priority) {
-      case TaskPriority.high:
+      case TaskPriorityModel.high:
         return isDarkMode ? Colors.red.shade800 : Colors.red.shade100;
-      case TaskPriority.medium:
+      case TaskPriorityModel.medium:
         return isDarkMode ? Colors.orange.shade800 : Colors.orange.shade100;
-      case TaskPriority.low:
+      case TaskPriorityModel.low:
         return isDarkMode ? Colors.green.shade800 : Colors.green.shade100;
     }
   }
@@ -74,33 +75,33 @@ class PriorityBadge extends StatelessWidget {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     switch (priority) {
-      case TaskPriority.high:
+      case TaskPriorityModel.high:
         return isDarkMode ? Colors.red.shade200 : Colors.red.shade700;
-      case TaskPriority.medium:
+      case TaskPriorityModel.medium:
         return isDarkMode ? Colors.orange.shade200 : Colors.orange.shade700;
-      case TaskPriority.low:
+      case TaskPriorityModel.low:
         return isDarkMode ? Colors.green.shade200 : Colors.green.shade700;
     }
   }
 
   IconData _getPriorityIcon() {
     switch (priority) {
-      case TaskPriority.high:
+      case TaskPriorityModel.high:
         return Icons.flag;
-      case TaskPriority.medium:
+      case TaskPriorityModel.medium:
         return Icons.flag;
-      case TaskPriority.low:
+      case TaskPriorityModel.low:
         return Icons.flag;
     }
   }
 
   String _getPriorityLabel() {
     switch (priority) {
-      case TaskPriority.high:
+      case TaskPriorityModel.high:
         return 'High';
-      case TaskPriority.medium:
+      case TaskPriorityModel.medium:
         return 'Medium';
-      case TaskPriority.low:
+      case TaskPriorityModel.low:
         return 'Low';
     }
   }

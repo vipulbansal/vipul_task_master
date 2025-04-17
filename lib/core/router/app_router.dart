@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vipul_task_master/presentation/screens/add_edit_task_screen.dart';
 
+import '../../domain/entities/task.dart';
 import '../../presentation/screens/home_screen.dart';
+import '../../presentation/screens/task_detail_screen.dart';
 import '../constants/app_constants.dart';
 
 class AppRouter {
@@ -11,6 +14,28 @@ class AppRouter {
       GoRoute(
         path: AppConstants.homeRoute,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: AppConstants.addTaskRoute,
+        builder: (context, state) {
+          return const AddEditTaskScreen();
+        },
+      ),
+      GoRoute(
+        path: AppConstants.editTaskRoute,
+        builder: (context, state) {
+          final task = state.extra as Task;
+          return AddEditTaskScreen(task: task);
+        },
+      ),
+      // Task detail screen
+      GoRoute(
+        path: '${AppConstants.taskDetailRoute}/:id',
+        builder: (context, state) {
+          final taskId = state.pathParameters['id']!;
+          final task = state.extra as Task?;
+          return TaskDetailScreen(taskId: taskId, task: task);
+        },
       ),
     ],
 

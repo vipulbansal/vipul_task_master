@@ -21,7 +21,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       title: fields[1] as String,
       description: fields[2] as String,
       dueDate: fields[3] as DateTime,
-      priority: fields[4] as TaskPriority,
+      priority: fields[4] as TaskPriorityModel,
       hasReminder: fields[5] as bool,
       isCompleted: fields[6] as bool,
       createdAt: fields[7] as DateTime,
