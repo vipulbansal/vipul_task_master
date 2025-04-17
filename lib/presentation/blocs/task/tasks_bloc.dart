@@ -33,6 +33,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<UpdateTaskEvent>(_onUpdateTask);
     on<DeleteTaskEvent>(_onDeleteTask);
     on<ToggleTaskCompletionEvent>(_onToggleTaskCompletion);
+    on<SyncTasksEvent>(_onSyncTasks);
   }
 
   // Handle fetch tasks event
@@ -215,6 +216,31 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         // Reload tasks list
         add(const FetchTasksEvent());
       }
+    } catch (e) {
+      emit(TaskError(e.toString()));
+    }
+  }
+
+  // Handle sync tasks event
+  Future<void> _onSyncTasks(
+      SyncTasksEvent event,
+      Emitter<TaskState> emit,
+      ) async {
+    emit(const TasksLoading());
+    try {
+      // For this implementation, we'll simply refetch all tasks
+      // which will trigger a sync between local and remote data sources
+      final tasks = await getTasksUseCase();
+
+      // Check if any tasks with reminders need notifications rescheduled
+      for (final task in tasks) {
+        if (task.hasReminder && !task.isCompleted) {
+          // Only try to schedule reminders for incomplete tasks
+          await notificationService.scheduleTaskReminder(task);
+        }
+      }
+
+      emit(TasksLoaded(tasks));
     } catch (e) {
       emit(TaskError(e.toString()));
     }
