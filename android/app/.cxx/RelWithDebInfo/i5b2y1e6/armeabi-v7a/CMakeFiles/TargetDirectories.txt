@@ -1,0 +1,2 @@
+/Users/nijjuk/Desktop/project/vipul_task_master/android/app/.cxx/RelWithDebInfo/i5b2y1e6/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/nijjuk/Desktop/project/vipul_task_master/android/app/.cxx/RelWithDebInfo/i5b2y1e6/armeabi-v7a/CMakeFiles/rebuild_cache.dir
