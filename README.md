@@ -138,8 +138,8 @@ lib/
 
 ## Technical Details
 
-- **Flutter**: 3.22.0 (Stable Channel)
-- **Dart**: 3.4.0
+- **Flutter**: 3.27.0 (Stable Channel)
+- **Dart**: 3.7.0
 - **State Management**: flutter_bloc (BLoC pattern)
 - **Dependency Injection**: get_it
 - **Navigation**: go_router
