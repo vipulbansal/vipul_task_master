@@ -14,7 +14,7 @@
     <!-- Alternative permission for Android 13+ that doesn't require user prompt but requires approval -->
     <!-- <uses-permission android:name="android.permission.USE_EXACT_ALARM" /> -->
     <application
-        android:label="Task Master"
+        android:label="QuickTask"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
