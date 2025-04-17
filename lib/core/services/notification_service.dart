@@ -157,7 +157,8 @@ class NotificationService {
 
     // Only schedule if reminder time is in the future
     final now = DateTime.now();
-    if (reminderTime.isBefore(now)) return false;
+    if (reminderTime.isBefore(now))
+      return false;
 
     try {
       // Create Android notification details
