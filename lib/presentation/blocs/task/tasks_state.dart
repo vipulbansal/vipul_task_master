@@ -43,6 +43,15 @@ class TaskError extends TaskState {
   List<Object> get props => [message];
 }
 
+class TaskSync extends TaskState {
+  final bool syncStatus;
+
+  const TaskSync(this.syncStatus);
+
+  @override
+  List<Object> get props => [syncStatus];
+}
+
 class TaskCreated extends TaskState {
   final Task task;
   final bool reminderScheduled;  // Indicates if reminder was successfully scheduled

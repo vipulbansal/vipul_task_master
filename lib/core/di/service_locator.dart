@@ -93,6 +93,7 @@ void _registerBlocs() {
     updateTaskUseCase: sl<UpdateTaskUseCase>(),
     deleteTaskUseCase: sl<DeleteTaskUseCase>(),
     notificationService: sl<NotificationService>(),
+    syncTasksUseCase: sl<SyncTasksUseCase>()
   ));
 
   // Register ThemeCubit

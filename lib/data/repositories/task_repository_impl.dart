@@ -95,7 +95,7 @@ class TaskRepositoryImpl implements TaskRepository {
     return remoteTasks.map((model) => model.toEntity()).toList();
   }
 
-  Future<void> syncTasks() async {
+  Future<bool> syncTasks() async {
     try {
       // Get tasks from both sources
       final remoteTasks = await _firestoreService.getAllTasks();
@@ -149,9 +149,10 @@ class TaskRepositoryImpl implements TaskRepository {
       if (tasksToDownload.isNotEmpty) {
         await _hiveService.saveTasks(tasksToDownload);
       }
+      return true;
     } catch (e) {
       print('Error syncing tasks: $e');
-      rethrow;
+      return false;
     }
   }
 

@@ -50,12 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.sync),
             onPressed: () {
               context.read<TaskBloc>().add(const SyncTasksEvent());
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Syncing tasks...'),
-                  duration: Duration(seconds: 1),
-                ),
-              );
             },
           ),
         ],
@@ -87,7 +81,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }
+          else if (state is TaskSync) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.syncStatus?"Synced Successfully":"Sync Failed"),
+                backgroundColor: state.syncStatus?Colors.green:Colors.red,
+              ),
+            );
+          }
         },
+        buildWhen: (previous,current)=>current.runtimeType!=TaskSync,
         builder: (context, state) {
           if (state is TasksLoading) {
             return const Center(

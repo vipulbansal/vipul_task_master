@@ -28,5 +28,5 @@ abstract class TaskRepository {
   Future<Task> toggleTaskCompletion(String id, bool isCompleted);
 
   /// Sync tasks with remote storage
-  Future<void> syncTasks();
+  Future<bool> syncTasks();
 }

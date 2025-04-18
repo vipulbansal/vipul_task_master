@@ -87,7 +87,7 @@ class SyncTasksUseCase {
 
   SyncTasksUseCase(this._repository);
 
-  Future<void> call() async {
-    await _repository.syncTasks();
+  Future<bool> call() async {
+   return await _repository.syncTasks();
   }
 }
