@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/vipulhome/fvm/versions/3.29.0/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/vipulhome/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/vipulhome/AppsDev/android/FlutterApps/april2025/github_apps/vipul_task_master/android/app/.cxx/Debug/2o4p2l1c/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/vipulhome/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/vipulhome/AppsDev/android/FlutterApps/april2025/github_apps/vipul_task_master/android/app/.cxx/Debug/2o4p2l1c/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

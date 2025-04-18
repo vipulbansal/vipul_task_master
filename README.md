@@ -26,6 +26,12 @@ A modern Flutter task management application designed with clean architecture an
 
 </div>
 
+<div align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.vipulsoftwares.vipul_task_master">
+    <img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" width="200"/>
+  </a>
+</div>
+
 ## Overview
 
 QuickTask is a powerful yet intuitive task management application built exclusively for Android and iOS mobile platforms using Flutter. It helps users organize their tasks with features like priority levels, due dates, and reminders. The application follows clean architecture principles and implements advanced patterns like BLoC for state management, with a focus on delivering a smooth mobile-first experience.
