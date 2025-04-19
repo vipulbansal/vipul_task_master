@@ -1,0 +1,2 @@
+/Users/vipulhome/AppsDev/android/FlutterApps/april2025/github_apps/vipul_task_master/android/app/.cxx/RelWithDebInfo/3f1k1957/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/vipulhome/AppsDev/android/FlutterApps/april2025/github_apps/vipul_task_master/android/app/.cxx/RelWithDebInfo/3f1k1957/arm64-v8a/CMakeFiles/rebuild_cache.dir
