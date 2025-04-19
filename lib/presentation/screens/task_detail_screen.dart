@@ -9,9 +9,10 @@ import '../../domain/entities/task.dart';
 import '../blocs/task/tasks_bloc.dart';
 import '../widgets/priority_badge.dart';
 
-class TaskDetailScreen extends StatelessWidget {
+class TaskDetailScreen extends StatefulWidget {
   final String taskId;
   final Task? task;
+
 
   const TaskDetailScreen({
     Key? key,
@@ -20,16 +21,16 @@ class TaskDetailScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    // If task was passed as extra, use it directly
-    // Otherwise fetch it using the taskId
-    if (task != null) {
-      return _buildTaskDetailScreen(context, task!);
-    }
+  State<TaskDetailScreen> createState() => _TaskDetailScreenState();
+}
 
+class _TaskDetailScreenState extends State<TaskDetailScreen> {
+
+
+  @override
+  Widget build(BuildContext context) {
     return BlocConsumer<TaskBloc, TaskState>(
       listener: (context, state) {
-        // Handle NotificationPermissionDenied state
         if (state is NotificationPermissionDenied) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -40,8 +41,6 @@ class TaskDetailScreen extends StatelessWidget {
                 label: 'Settings',
                 textColor: Colors.white,
                 onPressed: () {
-                  // This would ideally open system settings
-                  // For now just dismiss the snackbar
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 },
               ),
@@ -50,17 +49,32 @@ class TaskDetailScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        // Show loading while fetching
         if (state is TasksLoading) {
           return _buildLoadingScreen();
-        } else if (state is TaskLoaded && state.task.id == taskId) {
+        }
+
+        // When task is loaded
+        if (state is TaskLoaded && state.task.id == widget.taskId) {
+
           return _buildTaskDetailScreen(context, state.task);
-        } else if (state is TaskError) {
+        }
+
+        // Show error if something went wrong
+        if (state is TaskError) {
           return _buildErrorScreen(context, state.message);
-        } else {
-          // Fetch the task if it's not already loaded
-          context.read<TaskBloc>().add(FetchTaskEvent(taskId));
+        }
+
+        // Trigger fetch if nothing loaded yet
+        if (state is! TaskLoaded) {
+          if(ModalRoute.of(context)?.isCurrent == true)  {
+            context.read<TaskBloc>().add(FetchTaskEvent(widget.taskId));
+          }
           return _buildLoadingScreen();
         }
+
+        // This will *never* use fallback if task is being managed by BLoC
+        return _buildLoadingScreen();
       },
     );
   }
@@ -136,37 +150,35 @@ class TaskDetailScreen extends StatelessWidget {
                 onChanged: (value) {
                   if (value != null) {
                     context.read<TaskBloc>().add(
-                      ToggleTaskCompletionEvent(task.id, value),
-                    );
+                          ToggleTaskCompletionEvent(task.id, value),
+                        );
                   }
                 },
               ),
               Text(
                 task.isCompleted ? 'Completed' : 'Pending',
                 style: theme.textTheme.titleMedium?.copyWith(
-                  color: task.isCompleted 
-                      ? Colors.green
-                      : Colors.orange,
+                  color: task.isCompleted ? Colors.green : Colors.orange,
                 ),
               ),
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Task title
           Text(
             task.title,
             style: theme.textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              decoration: task.isCompleted 
+              decoration: task.isCompleted
                   ? TextDecoration.lineThrough
                   : TextDecoration.none,
             ),
           ),
-          
+
           const SizedBox(height: 8),
-          
+
           // Priority badge
           PriorityBadge(
             priority: task.priority,
@@ -174,9 +186,9 @@ class TaskDetailScreen extends StatelessWidget {
             height: 28,
             showLabel: true,
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Due date and time
           ListTile(
             leading: const Icon(Icons.calendar_today),
@@ -186,7 +198,7 @@ class TaskDetailScreen extends StatelessWidget {
             ),
             subtitle: Text(dateFormat.format(task.dueDate)),
           ),
-          
+
           ListTile(
             leading: const Icon(Icons.access_time),
             title: Text(
@@ -195,7 +207,7 @@ class TaskDetailScreen extends StatelessWidget {
             ),
             subtitle: Text(timeFormat.format(task.dueDate)),
           ),
-          
+
           // Time remaining (if not completed)
           if (!task.isCompleted)
             ListTile(
@@ -212,7 +224,7 @@ class TaskDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-          
+
           // Reminder status
           ListTile(
             leading: const Icon(Icons.notifications),
@@ -221,22 +233,22 @@ class TaskDetailScreen extends StatelessWidget {
               style: theme.textTheme.titleMedium,
             ),
             subtitle: Text(
-              task.hasReminder 
+              task.hasReminder
                   ? 'Enabled (15 minutes before due time)'
                   : 'Disabled',
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Description section
           Text(
             'Description',
             style: theme.textTheme.titleLarge,
           ),
-          
+
           const SizedBox(height: 8),
-          
+
           Card(
             margin: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
@@ -245,23 +257,21 @@ class TaskDetailScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Text(
-                task.description.isEmpty 
+                task.description.isEmpty
                     ? 'No description provided'
                     : task.description,
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  fontStyle: task.description.isEmpty 
+                  fontStyle: task.description.isEmpty
                       ? FontStyle.italic
                       : FontStyle.normal,
-                  color: task.description.isEmpty 
-                      ? Colors.grey
-                      : null,
+                  color: task.description.isEmpty ? Colors.grey : null,
                 ),
               ),
             ),
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Created/Updated info
           ListTile(
             leading: const Icon(Icons.info_outline),
@@ -273,7 +283,7 @@ class TaskDetailScreen extends StatelessWidget {
               DateFormat('MMM d, y • h:mm a').format(task.createdAt),
             ),
           ),
-          
+
           if (task.updatedAt != null)
             ListTile(
               leading: const Icon(Icons.update),
@@ -285,9 +295,9 @@ class TaskDetailScreen extends StatelessWidget {
                 DateFormat('MMM d, y • h:mm a').format(task.updatedAt!),
               ),
             ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Delete button
           OutlinedButton.icon(
             onPressed: () => _deleteTask(context, task),
@@ -305,7 +315,14 @@ class TaskDetailScreen extends StatelessWidget {
   }
 
   void _editTask(BuildContext context, Task task) {
-    context.push(AppConstants.editTaskRoute, extra: task);
+    TaskBloc taskBloc=context.read<TaskBloc>();
+    context.push(AppConstants.editTaskRoute, extra: task).then((value)async{
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          taskBloc.add(FetchTaskEvent(widget.taskId));
+        }
+      });
+    });
   }
 
   void _deleteTask(BuildContext context, Task task) {
@@ -341,7 +358,7 @@ class TaskDetailScreen extends StatelessWidget {
   Color _getTimeRemainingColor(DateTime dueDate, ThemeData theme) {
     final now = DateTime.now();
     final difference = dueDate.difference(now);
-    
+
     if (difference.isNegative) {
       return Colors.red; // Overdue
     } else if (difference.inHours < 24) {

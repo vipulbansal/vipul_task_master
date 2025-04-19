@@ -7,6 +7,7 @@ import '../../presentation/screens/home_screen.dart';
 import '../../presentation/screens/task_detail_screen.dart';
 import '../constants/app_constants.dart';
 
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 class AppRouter {
   static final GoRouter router = GoRouter(
     routes: [
@@ -38,7 +39,7 @@ class AppRouter {
         },
       ),
     ],
-
+    observers: [routeObserver],
     // Error screen
     errorBuilder: (context, state) => Scaffold(
       appBar: AppBar(

@@ -21,7 +21,6 @@ main() async {
   ]);
   runApp(const VipulTaskMaster());
 }
-
 class VipulTaskMaster extends StatelessWidget {
   const VipulTaskMaster({super.key});
 

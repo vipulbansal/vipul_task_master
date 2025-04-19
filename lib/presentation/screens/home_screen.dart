@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/constants/app_constants.dart';
+import '../../core/router/app_router.dart';
 import '../../domain/entities/task.dart';
 import '../blocs/task/tasks_bloc.dart';
 import '../blocs/themecubit/theme_cubit.dart';
@@ -16,12 +17,30 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>  with RouteAware{
   @override
   void initState() {
     super.initState();
     // Load tasks when screen is first shown
     context.read<TaskBloc>().add(const FetchTasksEvent());
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    // Called when coming back to this screen
+    // this works but I am commenting this just to use then and proves that work too
+    //context.read<TaskBloc>().add(const FetchTasksEvent());
   }
 
   @override
@@ -207,10 +226,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           }
-          
-          return const Center(
-            child: Text('Failed to load tasks'),
-          );
+          else if (state is TaskError) {
+            return const Center(child: Text('Failed to load tasks'));
+          }
+          print('vipul state is ${state.runtimeType}');
+          // Default: return an empty or loading placeholder (NOT error)
+          return const SizedBox.shrink(); // Or a loader if you'd prefer
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -221,11 +242,26 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   
   void _addTask(BuildContext context) {
-    context.push(AppConstants.addTaskRoute);
+    TaskBloc taskBloc=context.read<TaskBloc>();
+    context.push(AppConstants.addTaskRoute).then((value)async{
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          taskBloc.add(const FetchTasksEvent());
+        }
+      });
+    });
   }
-  
+
   void _openTaskDetails(BuildContext context, Task task) {
-    context.push('${AppConstants.taskDetailRoute}/${task.id}', extra: task);
+    TaskBloc taskBloc=context.read<TaskBloc>();
+    context.push('${AppConstants.taskDetailRoute}/${task.id}', extra: task).then((value) {
+      // Wait for next frame when widget is fully ready again
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          taskBloc.add(const FetchTasksEvent());
+        }
+      });
+    });
   }
   
   void _toggleTaskCompletion(String taskId, bool isCompleted) {
